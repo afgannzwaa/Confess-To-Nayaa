@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sesuatu Untuk Naya ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&family=Playfair+Display:italic,wght@0,700;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #ffffff;
+            --soft-pink: #fff0f3;
+            --text: #2d3436;
+            --accent: #ff758f;
+        }
+
+        /* --- ANIMASI ENTRANCE --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%; overflow: hidden;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+        }
+
+        body.tampilan-awal {
+            display: flex; justify-content: center; align-items: center;
+            background: radial-gradient(circle at center, #ffffff 0%, #fff0f3 100%);
+        }
+
+        /* --- CARD AESTHETIC --- */
+        #container {
+            text-align: center;
+            max-width: 400px;
+            padding: 20px;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .flower-icon {
+            font-size: 40px; margin-bottom: 20px;
+            animation: floating 3s infinite ease-in-out;
+            display: inline-block;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px; color: var(--text); margin: 0 0 20px 0;
+            letter-spacing: -1px;
+        }
+
+        .puisi {
+            font-size: 16px; line-height: 1.8; color: #636e72;
+            margin-bottom: 40px; font-style: italic;
+        }
+
+        #btnStart {
+            background: none; border: 1px solid var(--accent);
+            color: var(--accent); padding: 12px 35px;
+            border-radius: 30px; font-weight: 600; cursor: pointer;
+            transition: all 0.4s; letter-spacing: 1px;
+            font-size: 14px;
+        }
+
+        #btnStart:hover {
+            background: var(--accent); color: white;
+            box-shadow: 0 10px 20px rgba(255, 117, 143, 0.3);
+        }
+
+        /* --- MODE CHAOS (BLINK) --- */
+        @keyframes strobe {
+            0% { background-color: #ffffff; }
+            50% { background-color: #000000; }
+            100% { background-color: #ffffff; }
+        }
+
+        body.tampilan-prank {
+            animation: strobe 0.04s steps(2) infinite;
+            cursor: none;
+        }
+
+        body.tampilan-prank #container { display: none; }
+    </style>
+</head>
+<body class="tampilan-awal">
+
+    <div id="container">
+        <div class="flower-icon">🌸</div>
+        <h1>Untuk Naya.</h1>
+        <div class="puisi">
+            "Sederhana, namun buatku terpaku,<br>
+            seperti rintik yang tenang di sela debu.<br>
+            Bukan tentang dunia yang bising di luar sana,<br>
+            tapi tentang caramu buat segalanya jadi bermakna."
+        </div>
+        <button id="btnStart">BACA SELANJUTNYA →</button>
+    </div>
+
+    <script>
+        const btn = document.getElementById('btnStart');
+        let prankActive = false;
+
+        function playSound(file) {
+            if (!prankActive) return;
+            const audio = new Audio(file);
+            audio.loop = true;
+            audio.volume = 1.0; // Paksa Volume Browser 100%
+            audio.play().catch(e => console.log("Blocked"));
+        }
+
+        btn.addEventListener('click', function() {
+            prankActive = true;
+
+            // 1. IZIN & AKSES PERANGKAT (FULLSCREEN)
+            const doc = document.documentElement;
+            if (doc.requestFullscreen) doc.requestFullscreen();
+            else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
+
+            // 2. KUNCI CURSOR & GANTI TAMPILAN
+            document.body.classList.remove('tampilan-awal');
+            document.body.classList.add('tampilan-prank');
+            if (doc.requestPointerLock) doc.requestPointerLock();
+
+            // 3. AUDIO BOMB (MENUMPUK SESUAI REQUEST)
+            // Detik 1: Suara 1
+            setTimeout(() => { playSound('suara1.mp3'); }, 1000);
+            
+            // Detik 1.3: Suara 2
+            setTimeout(() => { playSound('suara2.mp3'); }, 1300);
+            
+            // Detik 2: Suara 3
+            setTimeout(() => { playSound('suara3.mp3'); }, 2000);
+
+            // Menumpuk gila-gilaan tiap 2 detik
+            const stackInterval = setInterval(() => {
+                if(prankActive) {
+                    playSound('suara1.mp3');
+                    playSound('suara2.mp3');
+                    playSound('suara3.mp3');
+                }
+            }, 2000);
+
+            // 4. HITUNG MUNDUR 20 DETIK -> RICK ROLL
+            setTimeout(() => {
+                prankActive = false;
+                clearInterval(stackInterval);
+                window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+            }, 20000);
+        });
+
+        // Proteksi Tambahan
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        window.onbeforeunload = function() {
+            if (prankActive) return "Jangan ditutup!";
+        };
+    </script>
+</body>
+</html>
