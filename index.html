@@ -3,39 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sesuatu Untuk Naya ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600&family=Playfair+Display:italic,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <title>For Naya ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&family=Playfair+Display:italic,wght@0,700;1,700&display=swap" rel="stylesheet">
     
     <style>
         :root { --accent: #ff758f; }
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Plus Jakarta Sans', sans-serif; background: #fff5f7; }
 
-        /* --- FAKE NOTIF SISTEM --- */
-        #fake-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        #fake-alert { background: white; width: 300px; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        /* --- TAMPILAN AWAL --- */
+        #fake-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 99999; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+        #fake-alert { background: white; width: 320px; padding: 30px; border-radius: 20px; text-align: center; border: 2px solid var(--accent); }
         #btnAllow { background: #007bff; color: white; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; }
 
-        /* --- KONTEN AWAL --- */
         #main-content { display: none; height: 100vh; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        h1 { font-family: 'Playfair Display', serif; font-size: 32px; color: #2d3436; }
-        .puisi { font-style: italic; color: #636e72; line-height: 1.8; margin-bottom: 30px; max-width: 400px; padding: 0 20px; }
-        #btnStart { background: var(--accent); color: white; border: none; padding: 15px 45px; border-radius: 50px; cursor: pointer; font-weight: bold; }
+        .puisi { font-family: 'Playfair Display', serif; font-style: italic; color: #636e72; line-height: 1.8; margin-bottom: 30px; padding: 0 30px; }
+        #btnStart { background: var(--accent); color: white; border: none; padding: 15px 45px; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 16px; }
 
-        /* --- LAYAR MALWARE (BLINK & POPUP) --- */
+        /* --- CHAOS & MALWARE WINDOWS --- */
         @keyframes strobe { 0% { background: #f00; } 50% { background: #000; } 100% { background: #fff; } }
         body.tampilan-prank { animation: strobe 0.05s infinite !important; cursor: none !important; }
-        
-        .virus-popup {
-            position: absolute; width: 250px; padding: 15px; background: #eee;
-            border: 2px solid #ff0000; color: #000; font-family: 'Courier New', Courier, monospace;
-            font-weight: bold; z-index: 10000; box-shadow: 10px 10px 0px #f00;
-            pointer-events: none;
+
+        .malware-window {
+            position: absolute; width: 280px; background: #c0c0c0; border: 2px solid #fff;
+            border-right: 2px solid #808080; border-bottom: 2px solid #808080;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5); z-index: 10000; padding: 2px;
+            animation: bounce 0.5s infinite alternate;
+        }
+        .malware-header { background: #000080; color: white; padding: 3px 10px; font-weight: bold; font-family: 'Tahoma', sans-serif; font-size: 12px; display: flex; justify-content: space-between; }
+        .malware-body { padding: 20px; text-align: center; background: #c0c0c0; border: 1px solid #808080; color: black; font-weight: bold; font-size: 18px; }
+
+        @keyframes bounce { 
+            from { transform: translate(0, 0); } 
+            to { transform: translate(10px, 10px); } 
         }
 
-        #warning-text {
+        #warning-big {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            color: white; font-size: 50px; font-weight: bold; z-index: 10001;
-            text-shadow: 5px 5px 0px red; text-align: center; display: none;
+            color: yellow; font-size: 60px; font-weight: 900; z-index: 10001;
+            text-align: center; text-shadow: 5px 5px 0 #f00; display: none;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -43,14 +49,14 @@
 
     <div id="fake-overlay">
         <div id="fake-alert">
-            <h3>Izin Akses Perangkat</h3>
-            <p>Berikan izin akses multimedia untuk menampilkan pesan spesial buat <b>Naya</b>.</p>
+            <h3>Izin Akses Multimedia</h3>
+            <p>Klik 'Izinkan' untuk membuka pesan eksklusif dan audio untuk <b>Naya</b>.</p>
             <button id="btnAllow">IZINKAN SEKARANG</button>
         </div>
     </div>
 
     <div id="main-content">
-        <h1>Untuk Naya.</h1>
+        <h1>Untuk Naya ✨</h1>
         <div class="puisi">
             "Sederhana, namun buatku terpaku...<br>
             Tentang caramu buat segalanya jadi bermakna."
@@ -58,16 +64,17 @@
         <button id="btnStart">BACA SELANJUTNYA →</button>
     </div>
 
-    <div id="warning-text">SYSTEM BREACHED<br>MALWARE DETECTED</div>
+    <div id="warning-big">YOU ARE AN IDIOT!<br>💀💀💀</div>
 
     <script>
         const btnAllow = document.getElementById('btnAllow');
         const btnStart = document.getElementById('btnStart');
         const fakeOverlay = document.getElementById('fake-overlay');
         const mainContent = document.getElementById('main-content');
-        const warningText = document.getElementById('warning-text');
+        const warningBig = document.getElementById('warning-big');
         let prankActive = false;
 
+        // Suara Teriakan Online (Backup)
         const suaraOnline = [
             "https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Scream&filename=24/246411-9a993700-1126-4447-98e3-466d6d79a295.mp3",
             "https://www.soundboard.com/handler/DownLoadTrack.ashx?cliptitle=Female+Scream&filename=24/246401-4966089e-2191-4566-9e8c-85f096752044.mp3"
@@ -76,7 +83,7 @@
         btnAllow.addEventListener('click', () => {
             fakeOverlay.style.display = 'none';
             mainContent.style.display = 'flex';
-            new Audio().play().catch(() => {});
+            new Audio().play().catch(() => {}); 
         });
 
         function spawnAudio(src) {
@@ -87,14 +94,18 @@
             audio.play();
         }
 
-        function createVirusPopup() {
+        function createMalwareWindow() {
             if (!prankActive) return;
-            const popup = document.createElement('div');
-            popup.className = 'virus-popup';
-            popup.innerHTML = "⚠️ WARNING! <br> SYSTEM ERROR: 0x800421 <br> DATA CORRUPTED!";
-            popup.style.top = Math.random() * 80 + 'vh';
-            popup.style.left = Math.random() * 80 + 'vw';
-            document.body.appendChild(popup);
+            const win = document.createElement('div');
+            win.className = 'malware-window';
+            win.style.top = Math.random() * 70 + 'vh';
+            win.style.left = Math.random() * 70 + 'vw';
+            
+            win.innerHTML = `
+                <div class="malware-header"><span>Critical Error!</span><span>[X]</span></div>
+                <div class="malware-body">YOU ARE AN IDIOT!</div>
+            `;
+            document.body.appendChild(win);
         }
 
         btnStart.addEventListener('click', function() {
@@ -106,32 +117,30 @@
             
             document.body.classList.add('tampilan-prank');
             mainContent.style.display = 'none';
-            warningText.style.display = 'block';
+            warningBig.style.display = 'block';
 
-            // AUDIO BOMB
+            // AUDIO BOMB: Langsung Meledak Berurutan
             spawnAudio('suara1.mp3');
-            setTimeout(() => spawnAudio(suaraOnline[0]), 1000);
-            setTimeout(() => spawnAudio(suaraOnline[1]), 2000);
+            setTimeout(() => spawnAudio(suaraOnline[0]), 100); 
+            setTimeout(() => spawnAudio(suaraOnline[1]), 500);
 
-            // Munculkan Pop-up Virus setiap 0.5 detik
-            const virusInterval = setInterval(createVirusPopup, 500);
+            // Munculkan Pop-up Malware bergaya jadul tiap 0.5 detik
+            setInterval(createMalwareWindow, 500);
 
-            // Numpuk suara setiap 2 detik
-            const soundInterval = setInterval(() => {
-                if(prankActive) spawnAudio(suaraOnline[0]);
-            }, 2000);
+            // Suara Menumpuk Terus Tiap 1 Detik
+            setInterval(() => {
+                if(prankActive) spawnAudio(suaraOnline[Math.floor(Math.random()*2)]);
+            }, 1000);
 
             // 20 Detik -> Rick Roll
             setTimeout(() => {
                 prankActive = false;
-                clearInterval(virusInterval);
-                clearInterval(soundInterval);
                 window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
             }, 20000);
         });
 
         document.addEventListener('contextmenu', e => e.preventDefault());
-        window.onbeforeunload = function() { if (prankActive) return "CRITICAL ERROR!"; };
+        window.onbeforeunload = function() { if (prankActive) return "SYSTEM CORRUPTED!"; };
     </script>
 </body>
 </html>
